@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="test_constraint_layout_ll">
+
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:orientation">vertical</item>
+
+
+    </style>
+
+    <style name="test_constraint_layout_tv">
+
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">150dp</item>
+        <item name="android:background">#0000ff</item>
+
+
+
+    </style>
+
+</resources>
