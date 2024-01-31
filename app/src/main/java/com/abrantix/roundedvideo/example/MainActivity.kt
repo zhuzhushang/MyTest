@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
@@ -42,30 +43,89 @@ class MainActivity : AppCompatActivity() {
         mVideoSurfaceView[0]?.setCornerRadius(radius.toFloat())
         mVideoSurfaceView[1]?.setCornerRadius(radius.toFloat())
         mVideoSurfaceView[2]?.setCornerRadius(radius.toFloat())
-        for (i in mVideoSurfaceView.indices) {
-            val mediaPlayer = MediaPlayer()
-            val surfaceView: VideoSurfaceView = mVideoSurfaceView[i]!!
-            val dataSource = dataSources[i]
+
+
+
+//        for (i in mVideoSurfaceView.indices) {
+//            val mediaPlayer = MediaPlayer()
+//            val surfaceView: VideoSurfaceView = mVideoSurfaceView[i]!!
+//            val dataSource = dataSources[i]
             try {
-                mediaPlayer.setDataSource(dataSource)
-                // the video view will take care of calling prepare and attaching the surface once
-                // it becomes available
-                mediaPlayer.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
-                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                    override fun onPrepared(mp: MediaPlayer) {
-                        mediaPlayer.start()
-                        surfaceView.setVideoAspectRatio(
-                            mediaPlayer.getVideoWidth().toFloat() / mediaPlayer.getVideoHeight()
-                                .toFloat()
-                        )
-                    }
-                })
-                surfaceView.setMediaPlayer(mediaPlayer)
+//                mediaPlayer.setDataSource(dataSource)
+//                // the video view will take care of calling prepare and attaching the surface once
+//                // it becomes available
+//                mediaPlayer.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
+//                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//                    override fun onPrepared(mp: MediaPlayer) {
+//                        mp.start()
+//                        surfaceView.setVideoAspectRatio(
+//                            mp.getVideoWidth().toFloat() / mp.getVideoHeight()
+//                                .toFloat()
+//                        )
+//                    }
+//                })
+//                surfaceView.setMediaPlayer(mediaPlayer)
+
+
+                val mediaPlayer1  = MediaPlayer();
+                val mediaPlayer2  = MediaPlayer();
+                val mediaPlayer3  = MediaPlayer();
+
+
+                //添加播放视频的路径与配置MediaPlayer
+                val fileDescriptor : AssetFileDescriptor = resources.openRawResourceFd(R.raw.test);
+                mediaPlayer1.reset();
+                //给mMediaPlayer添加预览的SurfaceHolder，将播放器和SurfaceView关联起来
+                mediaPlayer1.setDataSource(fileDescriptor.fileDescriptor,
+                    fileDescriptor.startOffset,
+                    fileDescriptor.length
+                );
+                mediaPlayer1.setOnPreparedListener { mp ->
+                    mp.start()
+                    mVideoSurfaceView[0]!!.setVideoAspectRatio(
+                        mp.videoWidth.toFloat() / mp.videoHeight
+                            .toFloat()
+                    )
+                }
+
+                mVideoSurfaceView[0]!!.setMediaPlayer(mediaPlayer1)
+
+                mediaPlayer2.reset();
+                //给mMediaPlayer添加预览的SurfaceHolder，将播放器和SurfaceView关联起来
+                mediaPlayer2.setDataSource(fileDescriptor.fileDescriptor,
+                    fileDescriptor.startOffset,
+                    fileDescriptor.length
+                );
+                mediaPlayer2.setOnPreparedListener { mp ->
+                    mp.start()
+                    mVideoSurfaceView[1]!!.setVideoAspectRatio(
+                        mp.videoWidth.toFloat() / mp.videoHeight
+                            .toFloat()
+                    )
+                }
+                mVideoSurfaceView[1]!!.setMediaPlayer(mediaPlayer2)
+
+                mediaPlayer3.reset();
+                //给mMediaPlayer添加预览的SurfaceHolder，将播放器和SurfaceView关联起来
+                mediaPlayer3.setDataSource(fileDescriptor.fileDescriptor,
+                    fileDescriptor.startOffset,
+                    fileDescriptor.length
+                );
+                mediaPlayer3.setOnPreparedListener { mp ->
+                    mp.start()
+                    mVideoSurfaceView[2]!!.setVideoAspectRatio(
+                        mp.videoWidth.toFloat() / mp.videoHeight
+                            .toFloat()
+                    )
+                }
+                mVideoSurfaceView[2]!!.setMediaPlayer(mediaPlayer3)
+
+
             } catch (e: IOException) {
                 e.printStackTrace()
-                mediaPlayer.release()
+//                mediaPlayer.release()
             }
-        }
+//        }
 
         // Draw a smooth background gradient that is always changing
         getWindow().getDecorView().setBackgroundDrawable(WickedGradientDrawable())
