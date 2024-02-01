@@ -15,6 +15,10 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
+    private val mediaPlayer1  = MediaPlayer()
+    private val mediaPlayer2  = MediaPlayer()
+    private val mediaPlayer3  = MediaPlayer()
+
     companion object{
 
         fun startActivity(context : Context){
@@ -33,9 +37,12 @@ class MainActivity : AppCompatActivity() {
         val radius: Int = getResources()
             .getDimensionPixelOffset(R.dimen.corner_radius_video)
         val dataSources = arrayOf(
+//            "http://7xjmzj.com1.z0.glb.clouddn.com/20171026175005_JObCxCE2.mp4",
+//            "http://wdquan-space.b0.upaiyun.com/VIDEO/2018/11/22/ae0645396048_hls_time10.m3u8",
+//            "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4,
             "http://7xjmzj.com1.z0.glb.clouddn.com/20171026175005_JObCxCE2.mp4",
-            "http://wdquan-space.b0.upaiyun.com/VIDEO/2018/11/22/ae0645396048_hls_time10.m3u8",
-            "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+            "http://7xjmzj.com1.z0.glb.clouddn.com/20171026175005_JObCxCE2.mp4",
+            "http://7xjmzj.com1.z0.glb.clouddn.com/20171026175005_JObCxCE2.mp4"
         )
         mVideoSurfaceView[0] = findViewById(R.id.video_surface_view1)
         mVideoSurfaceView[1] = findViewById(R.id.video_surface_view2)
@@ -67,9 +74,9 @@ class MainActivity : AppCompatActivity() {
 //                surfaceView.setMediaPlayer(mediaPlayer)
 
 
-                val mediaPlayer1  = MediaPlayer();
-                val mediaPlayer2  = MediaPlayer();
-                val mediaPlayer3  = MediaPlayer();
+//                val mediaPlayer1  = MediaPlayer()
+//                val mediaPlayer2  = MediaPlayer()
+//                val mediaPlayer3  = MediaPlayer()
 
 
                 //添加播放视频的路径与配置MediaPlayer
@@ -149,5 +156,17 @@ class MainActivity : AppCompatActivity() {
                 override fun onAnimationRepeat(animation: Animator) {}
             })
             .start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mediaPlayer1.stop()
+        mediaPlayer2.stop()
+        mediaPlayer3.stop()
+
+        mediaPlayer1.release()
+        mediaPlayer2.release()
+        mediaPlayer3.release()
     }
 }

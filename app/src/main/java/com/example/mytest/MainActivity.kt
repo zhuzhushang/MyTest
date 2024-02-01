@@ -2,6 +2,7 @@ package com.example.mytest
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.abrantix.roundedvideo.example.MainActivity
+import com.example.mytest.floating.FloatingSerivice
 import com.example.mytest.imp.OnNavigationStateListener
 import com.tencent.mmkv.MMKV
 import java.util.*
@@ -43,6 +45,38 @@ class MainActivity : AppCompatActivity() {
             MainActivity.startActivity(this)
 
         }
+
+        findViewById<Button>(R.id.clickme2).setOnClickListener {
+
+
+            com.fuusy.floatwindow.MainActivity.startActivity(this)
+
+        }
+
+
+        testFloating()
+
+    }
+
+    private fun testFloating() {
+
+        val intent = Intent(this,FloatingSerivice::class.java)
+        startService(intent)
+
+        findViewById<Button>(R.id.showMyFloat).setOnClickListener {
+
+            val intent = Intent(this,FloatingSerivice::class.java)
+            intent.putExtra(FloatingSerivice.ACTION_TYPE,FloatingSerivice.ACTION_ADD_VIEW)
+            startService(intent)
+        }
+
+        findViewById<Button>(R.id.removeMyFloat).setOnClickListener {
+
+            val intent = Intent(this,FloatingSerivice::class.java)
+            intent.putExtra(FloatingSerivice.ACTION_TYPE,FloatingSerivice.ACTION_REMOVE_VIEW)
+            startService(intent)
+        }
+
 
     }
 

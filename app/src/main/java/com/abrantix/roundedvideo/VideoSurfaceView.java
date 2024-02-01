@@ -281,6 +281,8 @@ public class VideoSurfaceView extends GLSurfaceView {
             }
         }
 
+
+
         public void onDrawFrame(GL10 glUnused) {
             synchronized(this) {
                 if (mUpdateSurface) {
